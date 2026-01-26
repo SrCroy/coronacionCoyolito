@@ -17,4 +17,8 @@ class Candidatas extends Model
     public function escrutinio(){
         return $this->hasMany(Escrutinios::class, 'candidatas_id');
     }
+
+    public function votos(){
+        return $this->hasMany(Votos::class, 'candidata_id');
+    }
 }

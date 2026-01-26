@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados - Gala Real</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-oro-puro: #FFD700;
+            --color-oro-oscuro: #B8860B;
+            --color-púrpura-real: #4B0082;
+            --color-burdeos: #800020;
+            --color-terciopelo: #301934;
+            --color-marfil: #FFFFF0;
+            --color-verde-esmeralda: #046307;
+            --color-rojo-pasion: #9A031E;
+            --color-azul-real: #1E3A8A;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: var(--color-marfil);
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+        
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: linear-gradient(to right, var(--color-terciopelo), var(--color-púrpura-real));
+            color: var(--color-oro-puro);
+            padding: 25px 0 20px;
+            text-align: center;
+            border-bottom: 6px solid var(--color-oro-puro);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%23FFD700" fill-opacity="0.05" d="M50,0 L60,40 L100,50 L60,60 L50,100 L40,60 L0,50 L40,40 Z"/></svg>');
+            background-size: 80px;
+            opacity: 0.3;
+        }
+        
+        .crown-icon {
+            color: var(--color-oro-puro);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-title {
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            font-size: 2.2rem;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+            margin-bottom: 10px;
+            letter-spacing: 1.5px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-subtitle {
+            font-family: 'Cinzel', serif;
+            font-weight: 400;
+            font-size: 1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: #E6D8C9;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.8px;
+        }
+        
+        .content-wrapper {
+            flex: 1;
+            padding: 30px 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+        }
+        
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .stats-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px 25px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .stats-text {
+            color: var(--color-oro-puro);
+            font-family: 'Cinzel', serif;
+            font-weight: 500;
+            margin: 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-royal {
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            background: linear-gradient(to right, var(--color-púrpura-real), var(--color-azul-real));
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .btn-royal:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            color: white;
+            background: linear-gradient(to right, var(--color-azul-real), var(--color-púrpura-real));
+        }
+        
+        .winner-section {
+            margin-bottom: 40px;
+        }
+        
+        .winner-card {
+            background: linear-gradient(145deg, rgba(255, 215, 0, 0.15), rgba(184, 134, 11, 0.1));
+            border-radius: 20px;
+            padding: 30px;
+            border: 3px solid var(--color-oro-puro);
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .winner-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%23FFD700" fill-opacity="0.1" d="M50,0 L60,40 L100,50 L60,60 L50,100 L40,60 L0,50 L40,40 Z"/></svg>');
+            background-size: 60px;
+        }
+        
+        .winner-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--color-oro-puro);
+            color: var(--color-terciopelo);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 2;
+        }
+        
+        .winner-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--color-oro-puro);
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .default-winner-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--color-púrpura-real), var(--color-terciopelo));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-oro-puro);
+            border: 5px solid var(--color-oro-puro);
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .default-winner-photo i {
+            font-size: 4rem;
+        }
+        
+        .winner-name {
+            font-family: 'Cinzel', serif;
+            color: var(--color-oro-puro);
+            font-weight: 900;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .winner-votes {
+            font-size: 1.3rem;
+            color: var(--color-marfil);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .result-card {
+            background: linear-gradient(145deg, rgba(75, 0, 130, 0.2), rgba(48, 25, 52, 0.3));
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .result-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+        
+        .result-card.top3 {
+            border: 2px solid var(--color-oro-puro);
+            background: linear-gradient(145deg, rgba(255, 215, 0, 0.1), rgba(184, 134, 11, 0.05));
+        }
+        
+        .result-rank {
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            font-size: 2rem;
+            color: var(--color-oro-puro);
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .rank-1 { color: #FFD700; }
+        .rank-2 { color: #C0C0C0; }
+        .rank-3 { color: #CD7F32; }
+        
+        .result-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--color-oro-puro);
+        }
+        
+        .default-result-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--color-púrpura-real), var(--color-terciopelo));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-oro-puro);
+            border: 2px solid var(--color-oro-puro);
+        }
+        
+        .result-info {
+            flex: 1;
+        }
+        
+        .result-name {
+            font-family: 'Cinzel', serif;
+            color: var(--color-oro-puro);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .result-details {
+            color: #E6D8C9;
+            font-size: 0.9rem;
+        }
+        
+        .result-votes {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid var(--color-oro-puro);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .progress-bar-container {
+            margin-top: 10px;
+        }
+        
+        .progress-bar-royal {
+            height: 10px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--color-oro-puro), var(--color-oro-oscuro));
+            border-radius: 5px;
+            width: 0%;
+            transition: width 1.5s ease-in-out;
+        }
+        
+        .percentage {
+            font-weight: bold;
+            color: var(--color-oro-puro);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .empty-icon {
+            font-size: 5rem;
+            color: var(--color-oro-puro);
+            margin-bottom: 25px;
+            opacity: 0.7;
+        }
+        
+        .empty-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: var(--color-oro-puro);
+            margin-bottom: 15px;
+        }
+        
+        .empty-text {
+            font-size: 1.1rem;
+            color: #E6D8C9;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        @media (max-width: 992px) {
+            .results-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .action-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .btn-royal {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .stats-box {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .winner-card {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 20px 0 15px;
+            }
+            
+            .page-title {
+                font-size: 1.5rem;
+            }
+            
+            .crown-icon {
+                font-size: 2rem;
+            }
+            
+            .content-wrapper {
+                padding: 20px 15px;
+            }
+            
+            .result-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <header class="header">
+            <div class="container">
+                <div class="crown-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <h1 class="page-title">RESULTADOS DE LA VOTACIÓN</h1>
+                <p class="page-subtitle">GALA DE CORONACIÓN REAL - RESULTADOS EN TIEMPO REAL</p>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <div class="container">
+                <div class="action-bar">
+                    <div class="stats-box">
+                        <p class="stats-text">
+                            <i class="fas fa-users-crown"></i> Total Candidatas: {{ count($candidatas) }}
+                        </p>
+                        <p class="stats-text">
+                            <i class="fas fa-vote-yea"></i> Total Votos: {{ $totalVotos }}
+                        </p>
+                    </div>
+                    
+                    <a href="{{ route('home') }}" class="btn-royal">
+                        <i class="fas fa-arrow-left"></i> VOLVER A VOTAR
+                    </a>
+                </div>
+
+                @if(count($candidatas) > 0)
+                    @php
+                        $topCandidata = $candidatas->first();
+                        $maxVotos = $candidatas->max('votos_count');
+                    @endphp
+
+                    @if($topCandidata->votos_count > 0)
+                    <div class="winner-section">
+                        <div class="winner-card">
+                            <div class="winner-badge">
+                                <i class="fas fa-trophy"></i> GANADORA ACTUAL
+                            </div>
+                            
+                            @if($topCandidata->fotoCandidata)
+                            <img src="{{ asset('storage/' . $topCandidata->fotoCandidata) }}" 
+                                 alt="{{ $topCandidata->nombreCandidata }}" 
+                                 class="winner-photo">
+                            @else
+                            <div class="default-winner-photo">
+                                <i class="fas fa-user-crown"></i>
+                            </div>
+                            @endif
+                            
+                            <h2 class="winner-name">
+                                {{ $topCandidata->nombreCandidata }} {{ $topCandidata->apellidoCandidata }}
+                            </h2>
+                            
+                            <div class="winner-votes">
+                                <i class="fas fa-heart"></i>
+                                <span>{{ $topCandidata->votos_count }} VOTOS</span>
+                            </div>
+                            
+                            @if($totalVotos > 0)
+                            @php
+                                $porcentaje = round(($topCandidata->votos_count / $totalVotos) * 100, 1);
+                            @endphp
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-royal">
+                                    <div class="progress-fill" style="width: {{ $porcentaje }}%"></div>
+                                </div>
+                                <div class="mt-2">
+                                    <span class="percentage">{{ $porcentaje }}%</span>
+                                    <span> del total de votos</span>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    @endif
+
+                    <h3 class="text-center mb-4" style="color: var(--color-oro-puro); font-family: 'Cinzel';">
+                        <i class="fas fa-list-ol me-2"></i> CLASIFICACIÓN COMPLETA
+                    </h3>
+                    
+                    <div class="results-grid">
+                        @foreach($candidatas as $index => $candidata)
+                            @php
+                                $rank = $index + 1;
+                                $porcentaje = $totalVotos > 0 ? round(($candidata->votos_count / $totalVotos) * 100, 1) : 0;
+                            @endphp
+                            
+                            <div class="result-card {{ $rank <= 3 ? 'top3' : '' }}">
+                                <div class="result-rank">
+                                    <span class="rank-{{ $rank }}">#{{ $rank }}</span>
+                                </div>
+                                
+                                @if($candidata->fotoCandidata)
+                                <img src="{{ asset('storage/' . $candidata->fotoCandidata) }}" 
+                                     alt="{{ $candidata->nombreCandidata }}" 
+                                     class="result-photo">
+                                @else
+                                <div class="default-result-photo">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                @endif
+                                
+                                <div class="result-info">
+                                    <h4 class="result-name">
+                                        {{ $candidata->nombreCandidata }} {{ $candidata->apellidoCandidata }}
+                                    </h4>
+                                    
+                                    <div class="result-votes">
+                                        <i class="fas fa-heart"></i>
+                                        <span>{{ $candidata->votos_count }} votos</span>
+                                    </div>
+                                    
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar-royal">
+                                            <div class="progress-fill" style="width: {{ $porcentaje }}%"></div>
+                                        </div>
+                                        <div class="mt-1">
+                                            <small class="percentage">{{ $porcentaje }}%</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-user-slash"></i>
+                    </div>
+                    <h3 class="empty-title">No hay candidatas registradas</h3>
+                    <p class="empty-text">Aún no se han registrado candidatas para la gala de coronación.</p>
+                    <a href="{{ route('votacion.index') }}" class="btn-royal">
+                        <i class="fas fa-home"></i> VOLVER AL INICIO
+                    </a>
+                </div>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Animación de las barras de progreso
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
