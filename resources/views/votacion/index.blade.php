@@ -808,10 +808,6 @@
                             <i class="fas fa-users-crown"></i> Total Candidatas: {{ count($candidatas) }}
                         </p>
                     </div>
-                    
-                    <a href="{{ route('resultados') }}" class="btn-royal">
-                        <i class="fas fa-chart-bar"></i> VER RESULTADOS
-                    </a>
                 </div>
 
                 @if(count($candidatas) > 0)
@@ -935,12 +931,6 @@
                         <i class="fas fa-star me-2" style="color: var(--color-oro-puro);"></i>
                         ¡Gracias por participar en la Gala de Coronación Real!
                     </p>
-                    
-                    <div class="mt-4">
-                        <a href="{{ route('resultados') }}" class="btn-royal">
-                            <i class="fas fa-chart-bar me-2"></i> VER RESULTADOS EN TIEMPO REAL
-                        </a>
-                    </div>
                 </div>
                 <div class="modal-footer justify-content-center">
                     <button type="button" class="btn-royal" data-bs-dismiss="modal">
@@ -1022,9 +1012,6 @@
                     <button type="button" class="btn-royal" data-bs-dismiss="modal">
                         <i class="fas fa-times me-2"></i> CERRAR
                     </button>
-                    <a href="{{ route('resultados') }}" class="btn-royal btn-success-royal">
-                        <i class="fas fa-chart-bar me-2"></i> VER RESULTADOS
-                    </a>
                 </div>
             </div>
         </div>
