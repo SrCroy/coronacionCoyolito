@@ -27,6 +27,6 @@ Route::get('/', [VotosController::class, 'index'])->name('home');
 Route::post('/votar', [VotosController::class, 'votar'])->name('votar');
 Route::get('/resultados', [VotosController::class, 'resultados'])->name('resultados');
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
 
 require __DIR__.'/auth.php';
